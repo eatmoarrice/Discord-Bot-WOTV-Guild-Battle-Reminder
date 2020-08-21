@@ -2,16 +2,45 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 let cron = require('node-cron');
 require('dotenv').config();
-
 const token = process.env.TOKEN;
+const fetch = require('node-fetch');
 
 bot.on('ready', () => {
 	console.log('Naggy Nemo is alive!');
 });
 
+const fetchDog = async () => {
+	let url = 'https://random.dog/woof.json';
+	let data = await fetch(url);
+	let response = await data.json();
+	return response.url;
+};
+
+const fetchCat = async () => {
+	let url = 'https://aws.random.cat/meow';
+	let data = await fetch(url);
+	let response = await data.json();
+	return response.file;
+};
+
 bot.on('message', async (msg) => {
 	console.log(msg.content);
 	if (msg.content.startsWith('<@!746413258759602246>')) {
+		if (msg.content.includes('dog') || msg.content.includes('cat')) {
+			if (msg.content.includes('dog')) {
+				let url = await fetchDog();
+				msg.channel.send({
+					files: [url],
+				});
+			}
+			if (msg.content.includes('cat')) {
+				let url = await fetchCat();
+				msg.channel.send({
+					files: [url],
+				});
+			}
+			return;
+		}
 		const members = await msg.guild.members.fetch();
 		let membersArray = [];
 		members.map((member) => {
@@ -21,6 +50,8 @@ bot.on('message', async (msg) => {
 		const person = membersArray[random].user.username;
 		if (msg.content.startsWith('<@!746413258759602246> Who is')) {
 			await msg.channel.send(`C'mon! Everyone knows it's ${person}!!`);
+		} else if (msg.content.startsWith('<@!746413258759602246>') && msg.content.endsWith('?')) {
+			await msg.channel.send(eightball);
 		} else msg.reply('Why are you talking to me?! Go do your guild battles!!');
 	}
 });
