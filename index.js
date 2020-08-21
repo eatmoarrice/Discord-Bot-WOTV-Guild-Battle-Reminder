@@ -9,9 +9,17 @@ bot.on('ready', () => {
 	console.log('Naggy Nemo is alive!');
 });
 
-bot.on('message', (msg) => {
+bot.on('message', async (msg) => {
 	console.log(msg.content);
-	if (msg.content.includes('<@!746413258759602246>')) {
+	if (msg.content === '<@!746413258759602246> Who is my lover?') {
+		const members = await msg.guild.members.fetch();
+		let membersArray = [];
+		members.map((member) => {
+			membersArray.push(member);
+		});
+		const random = Math.floor(Math.random() * membersArray.length);
+		msg.reply(`C'mon! Everyone know your lover is ${membersArray[random]}`);
+	} else if (msg.content.includes('<@!746413258759602246>')) {
 		msg.reply('Why are you talking to me?! Go do your guild battles!!');
 	}
 });
