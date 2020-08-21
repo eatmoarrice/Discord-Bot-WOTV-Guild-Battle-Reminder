@@ -9,12 +9,12 @@ bot.on('ready', () => {
 	console.log('Naggy Nemo is alive!');
 });
 
-// bot.on('message', (msg) => {
-// 	console.log(msg.content);
-// 	if (msg.content.includes('<@!746413258759602246>')) {
-// 		msg.reply('Why are you talking to me?! Go do your guild battles!!');
-// 	}
-// });
+bot.on('message', (msg) => {
+	console.log(msg.content);
+	if (msg.content.includes('<@!746413258759602246>')) {
+		msg.reply('Why are you talking to me?! Go do your guild battles!!');
+	}
+});
 
 bot.once('ready', () => {
 	cron.schedule(
