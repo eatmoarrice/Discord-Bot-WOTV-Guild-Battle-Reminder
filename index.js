@@ -10,17 +10,18 @@ bot.on('ready', () => {
 });
 
 bot.on('message', async (msg) => {
-	if (msg.content === '<@!746413258759602246> Who is my lover?') {
+	console.log(msg.content);
+	if (msg.content.startsWith('<@!746413258759602246>')) {
 		const members = await msg.guild.members.fetch();
 		let membersArray = [];
 		members.map((member) => {
 			membersArray.push(member);
 		});
-		console.log('hee', membersArray[0]);
 		const random = Math.floor(Math.random() * membersArray.length);
-		msg.reply(`C'mon! Everyone know your lover is ${membersArray[random].user.username}`);
-	} else if (msg.content.includes('<@!746413258759602246>')) {
-		msg.reply('Why are you talking to me?! Go do your guild battles!!');
+		const person = membersArray[random].user.username;
+		if (msg.content.startsWith('<@!746413258759602246> Who is')) {
+			await msg.channel.send(`C'mon! Everyone know it's ${person}!!`);
+		} else msg.reply('Why are you talking to me?! Go do your guild battles!!');
 	}
 });
 
