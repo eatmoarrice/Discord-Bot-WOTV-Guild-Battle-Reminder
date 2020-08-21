@@ -20,7 +20,7 @@ bot.on('message', async (msg) => {
 		const random = Math.floor(Math.random() * membersArray.length);
 		const person = membersArray[random].user.username;
 		if (msg.content.startsWith('<@!746413258759602246> Who is')) {
-			await msg.channel.send(`C'mon! Everyone know it's ${person}!!`);
+			await msg.channel.send(`C'mon! Everyone knows it's ${person}!!`);
 		} else msg.reply('Why are you talking to me?! Go do your guild battles!!');
 	}
 });
