@@ -31,6 +31,17 @@ const fetchMeme = async () => {
 	return { title: response.title, url: response.url };
 };
 
+const fetchJoke = async (options) => {
+	let option = 'Any';
+	if (options.join('')) {
+		option = options.filter((str) => str).join(',');
+	}
+	let url = `https://sv443.net/jokeapi/v2/joke/${option}?blacklistFlags=nsfw,racist,sexist`;
+	let data = await fetch(url);
+	let response = await data.json();
+	return response;
+};
+
 const fetchPxels = async (query) => {
 	let url = `https://api.pexels.com/v1/search?query=${query}&per_page=10`;
 	let data = await fetch(url, {
@@ -56,6 +67,27 @@ bot.on('message', async (msg) => {
 			});
 			return;
 		}
+
+		if (message.includes('joke')) {
+			let options = [];
+			if (message.includes('dark')) {
+				options.push('Dark');
+			}
+			if (message.includes('pun')) {
+				options.push('Pun');
+			}
+			let joke = await fetchJoke(options);
+			if (joke.setup) {
+				msg.channel.send(joke.setup);
+				msg.channel.send(joke.delivery);
+			}
+			if (joke.joke) {
+				msg.channel.send(joke.joke);
+			}
+
+			return;
+		}
+
 		if (
 			words[1].toLowerCase() === 'is' ||
 			words[1].toLowerCase() === 'are' ||
