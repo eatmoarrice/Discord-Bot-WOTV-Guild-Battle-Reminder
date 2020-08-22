@@ -45,6 +45,7 @@ bot.on('message', async (msg) => {
 		if (words[1].toLowerCase() === 'is' || words[1].toLowerCase() === 'are') {
 			let answer = Math.floor(Math.random() * 2) === 0 ? 'yes' : 'no';
 			msg.channel.send(`My dad says ${answer}!`);
+			return;
 		}
 		if (words[1].toLowerCase() === 'show' && words[2].toLowerCase() === 'me') {
 			let keyword = message.split(' ').slice(3).join(' ');
