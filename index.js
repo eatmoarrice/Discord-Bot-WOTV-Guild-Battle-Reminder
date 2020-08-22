@@ -4,6 +4,7 @@ let cron = require('node-cron');
 require('dotenv').config();
 const token = process.env.TOKEN;
 const pexelsAPI = process.env.PEXEL;
+const unsplashAK = process.env.UNSPLASH_ACCESSKEY;
 const fetch = require('node-fetch');
 
 bot.on('ready', () => {
@@ -64,6 +65,19 @@ const fetchPxels = async (query) => {
 	if (photos.length > 0) {
 		let random = Math.floor(Math.random() * photos.length);
 		return photos[random].src.landscape;
+	} else return '';
+};
+
+const fetchUnsplash = async (query) => {
+	let url = `https://api.unsplash.com/photos/random?query=${query}&count=5`;
+	let data = await fetch(url, {
+		method: 'GET',
+		headers: { Authorization: `Client-ID ${unsplashAK}` },
+	});
+	let response = await data.json();
+	if (response.length > 0) {
+		let random = Math.floor(Math.random() * response.length);
+		return response[random];
 	} else return '';
 };
 
@@ -137,15 +151,30 @@ bot.on('message', async (msg) => {
 			msg.channel.send(`My dad says ${answer}!`);
 			return;
 		}
+
+		// PEXELS
+		// if (words[1].toLowerCase() === 'show' && words[2].toLowerCase() === 'me') {
+		// 	let keyword = message.split(' ').slice(3).join(' ');
+		// 	let url = await fetchPxels(keyword);
+		// 	if (!url) {
+		// 		msg.channel.send(`I can't find '${keyword}' on Pexels. :(`);
+		// 	} else
+		// 		msg.channel.send(`I found this on Pexels for '${keyword}':`, {
+		// 			files: [url],
+		// 		});
+		// 	return;
+		// }
+
+		// UNSPLASH
 		if (words[1].toLowerCase() === 'show' && words[2].toLowerCase() === 'me') {
 			let keyword = message.split(' ').slice(3).join(' ');
-			let url = await fetchPxels(keyword);
-			if (!url) {
-				msg.channel.send(`I can't find '${keyword}' on Pexels. :(`);
-			} else
-				msg.channel.send(`I found this on Pexels for '${keyword}':`, {
-					files: [url],
-				});
+			let photoObject = await fetchUnsplash(keyword);
+			if (!photoObject) {
+				msg.channel.send(`I can't find '${keyword}' on Unsplash. :(`);
+			} else {
+				msg.channel.send(`Photo by ${photoObject.user.name}`);
+				msg.channel.send(photoObject.urls.small);
+			}
 			return;
 		}
 
