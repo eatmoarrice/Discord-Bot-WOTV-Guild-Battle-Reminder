@@ -42,6 +42,17 @@ const fetchJoke = async (options) => {
 	return response;
 };
 
+const fetchDadJoke = async () => {
+	let url = `https://icanhazdadjoke.com/`;
+	let data = await fetch(url, {
+		method: 'GET',
+		headers: { Accept: 'application/json' },
+	});
+	let response = await data.json();
+
+	return response.joke;
+};
+
 const fetchPxels = async (query) => {
 	let url = `https://api.pexels.com/v1/search?query=${query}&per_page=10`;
 	let data = await fetch(url, {
@@ -60,6 +71,7 @@ bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim();
 	let words = message.split(' ');
 	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
+		// MEME
 		if (message.includes('meme')) {
 			let meme = await fetchMeme();
 			msg.channel.send(meme.title, {
@@ -68,6 +80,13 @@ bot.on('message', async (msg) => {
 			return;
 		}
 
+		// DAD JOKE
+		if (message.includes('dad joke')) {
+			let dadjoke = await fetchDadJoke();
+			msg.channel.send(dadjoke);
+			return;
+		}
+		// NORMAL JOKE
 		if (message.includes('joke') || message.includes(' pun')) {
 			let options = [];
 			if (message.includes('dark')) {
@@ -86,10 +105,10 @@ bot.on('message', async (msg) => {
 			if (joke.joke) {
 				msg.channel.send(joke.joke);
 			}
-
 			return;
 		}
 
+		// YES/NO QUESTIONS
 		if (
 			words[1].toLowerCase() === 'is' ||
 			words[1].toLowerCase() === 'are' ||
@@ -126,21 +145,24 @@ bot.on('message', async (msg) => {
 				});
 			return;
 		}
-		if (message.includes('dog') || message.includes('cat')) {
-			if (message.includes('dog')) {
-				let url = await fetchDog();
-				msg.channel.send({
-					files: [url],
-				});
-			}
-			if (message.includes('cat')) {
-				let url = await fetchCat();
-				msg.channel.send({
-					files: [url],
-				});
-			}
-			return;
+
+		// DOG PIC
+		if (message.includes('dog')) {
+			let url = await fetchDog();
+			return msg.channel.send({
+				files: [url],
+			});
 		}
+
+		// CAT PIC
+		if (message.includes('cat')) {
+			let url = await fetchCat();
+			return msg.channel.send({
+				files: [url],
+			});
+		}
+
+		// GUILD BATTLE REMINDER
 		const members = await msg.guild.members.fetch();
 		let membersArray = [];
 		members.map((member) => {
