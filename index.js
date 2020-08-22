@@ -34,17 +34,16 @@ const fetchPxels = async (query) => {
 	let photos = response.photos;
 	if (photos.length > 0) {
 		let random = Math.floor(Math.random() * photos.length);
-		console.log(photos);
-		console.log(photos[random]);
 		return photos[random].src.landscape;
 	} else return '';
 };
 
 bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim();
-	if (message.startsWith('<@!746413258759602246>')) {
-		if (message.startsWith('<@!746413258759602246> show me ') || msg.content.startsWith('<@!746413258759602246> Show me ')) {
-			let str = message;
+	let words = message.split(' ');
+	console.log(words);
+	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
+		if (words[1].toLowerCase() === 'show' && words[2].toLowerCase() === 'me') {
 			let keyword = message.split(' ').slice(3).join(' ');
 			let url = await fetchPxels(keyword);
 			if (!url) {
@@ -77,7 +76,7 @@ bot.on('message', async (msg) => {
 		});
 		const random = Math.floor(Math.random() * membersArray.length);
 		const person = membersArray[random].user.username;
-		if (message.startsWith('<@!746413258759602246> Who is') || message.startsWith('<@!746413258759602246> who is')) {
+		if (words[1].toLowerCase() === 'who') {
 			await msg.channel.send(`C'mon! Everyone knows it's ${person}!!`);
 			// } else if (message.startsWith('<@!746413258759602246>') && message.endsWith('?')) {
 			// 	await msg.channel.send(eightball);
