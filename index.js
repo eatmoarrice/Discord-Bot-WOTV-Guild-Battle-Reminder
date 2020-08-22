@@ -174,7 +174,10 @@ bot.on('message', async (msg) => {
 				msg.channel.send(`I can't find '${keyword}' on Unsplash. :(`);
 			} else {
 				msg.channel.send(`Photo by ${photoObject.user.name}`);
+				if (photoObject.description) msg.channel.send(`Description: ${photoObject.description}`);
+				else if (photoObject.alt_description) msg.channel.send(`Description: ${photoObject.alt_description}`);
 				msg.channel.send(photoObject.urls.small);
+				msg.channel.send(`<${photoObject.links.html}>`);
 			}
 			return;
 		}
