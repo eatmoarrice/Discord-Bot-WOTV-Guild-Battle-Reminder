@@ -32,8 +32,12 @@ const fetchPxels = async (query) => {
 	});
 	let response = await data.json();
 	let photos = response.photos;
-	let random = Math.floor(Math.random() * photos.length);
-	return photos[random].src.landscape;
+	if (photos.length > 0) {
+		let random = Math.floor(Math.random() * photos.length);
+		console.log(photos);
+		console.log(photos[random]);
+		return photos[random].src.landscape;
+	} else return '';
 };
 
 bot.on('message', async (msg) => {
@@ -41,11 +45,14 @@ bot.on('message', async (msg) => {
 	if (message.startsWith('<@!746413258759602246>')) {
 		if (message.startsWith('<@!746413258759602246> show me ') || msg.content.startsWith('<@!746413258759602246> Show me ')) {
 			let str = message;
-			let keyword = message.split(' ').slice(2).join(' ');
+			let keyword = message.split(' ').slice(3).join(' ');
 			let url = await fetchPxels(keyword);
-			msg.channel.send({
-				files: [url],
-			});
+			if (!url) {
+				msg.channel.send(`I can't find '${keyword}' on Pexels. :(`);
+			} else
+				msg.channel.send(`I found this on Pexels for '${keyword}':`, {
+					files: [url],
+				});
 			return;
 		}
 		if (message.includes('dog') || message.includes('cat')) {
