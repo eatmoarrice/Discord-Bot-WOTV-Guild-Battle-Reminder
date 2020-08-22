@@ -92,6 +92,9 @@ bot.on('message', async (msg) => {
 			if (message.includes('dark')) {
 				options.push('Dark');
 			}
+			if (message.includes('programming')) {
+				options.push('Programming');
+			}
 			if (message.includes('pun')) {
 				options.push('Pun');
 			}
