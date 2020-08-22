@@ -42,7 +42,14 @@ bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim();
 	let words = message.split(' ');
 	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
-		if (words[1].toLowerCase() === 'is' || words[1].toLowerCase() === 'are') {
+		if (
+			words[1].toLowerCase() === 'is' ||
+			words[1].toLowerCase() === 'are' ||
+			words[1].toLowerCase() === 'will' ||
+			words[1].toLowerCase() === 'do' ||
+			words[1].toLowerCase() === 'does' ||
+			words[1].toLowerCase() === 'am'
+		) {
 			let answer = Math.floor(Math.random() * 2) === 0 ? 'yes' : 'no';
 			msg.channel.send(`My dad says ${answer}!`);
 			return;
