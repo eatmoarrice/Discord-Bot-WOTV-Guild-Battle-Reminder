@@ -41,8 +41,11 @@ const fetchPxels = async (query) => {
 bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim();
 	let words = message.split(' ');
-	console.log(words);
 	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
+		if (words[1].toLowerCase() === 'is' || words[1].toLowerCase() === 'are') {
+			let answer = Math.floor(Math.random() * 2) === 0 ? 'yes' : 'no';
+			msg.channel.send(`My dad says ${answer}!`);
+		}
 		if (words[1].toLowerCase() === 'show' && words[2].toLowerCase() === 'me') {
 			let keyword = message.split(' ').slice(3).join(' ');
 			let url = await fetchPxels(keyword);
