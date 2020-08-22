@@ -48,7 +48,12 @@ bot.on('message', async (msg) => {
 			words[1].toLowerCase() === 'will' ||
 			words[1].toLowerCase() === 'do' ||
 			words[1].toLowerCase() === 'does' ||
-			words[1].toLowerCase() === 'am'
+			words[1].toLowerCase() === 'am' ||
+			words[1].toLowerCase() === 'can' ||
+			words[1].toLowerCase() === 'could' ||
+			words[1].toLowerCase() === 'may' ||
+			words[1].toLowerCase() === 'might' ||
+			words[1].toLowerCase() === 'would'
 		) {
 			let answer = Math.floor(Math.random() * 2) === 0 ? 'yes' : 'no';
 			msg.channel.send(`My dad says ${answer}!`);
