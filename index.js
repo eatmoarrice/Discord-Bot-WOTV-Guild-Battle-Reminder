@@ -48,6 +48,7 @@ bot.on('message', async (msg) => {
 			words[1].toLowerCase() === 'will' ||
 			words[1].toLowerCase() === 'do' ||
 			words[1].toLowerCase() === 'does' ||
+			words[1].toLowerCase() === 'did' ||
 			words[1].toLowerCase() === 'am' ||
 			words[1].toLowerCase() === 'can' ||
 			words[1].toLowerCase() === 'could' ||
