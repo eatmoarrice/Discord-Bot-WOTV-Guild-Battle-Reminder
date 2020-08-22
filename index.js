@@ -24,6 +24,13 @@ const fetchCat = async () => {
 	return response.file;
 };
 
+const fetchMeme = async () => {
+	let url = 'https://meme-api.herokuapp.com/gimme';
+	let data = await fetch(url);
+	let response = await data.json();
+	return { title: response.title, url: response.url };
+};
+
 const fetchPxels = async (query) => {
 	let url = `https://api.pexels.com/v1/search?query=${query}&per_page=10`;
 	let data = await fetch(url, {
@@ -42,6 +49,13 @@ bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim();
 	let words = message.split(' ');
 	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
+		if (message.includes('meme')) {
+			let meme = await fetchMeme();
+			msg.channel.send(meme.title, {
+				files: [meme.url],
+			});
+			return;
+		}
 		if (
 			words[1].toLowerCase() === 'is' ||
 			words[1].toLowerCase() === 'are' ||
