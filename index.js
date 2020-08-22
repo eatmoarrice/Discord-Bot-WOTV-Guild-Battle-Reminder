@@ -69,7 +69,7 @@ const fetchPxels = async (query) => {
 };
 
 const fetchUnsplash = async (query) => {
-	let url = `https://api.unsplash.com/photos/random?query=${query}&count=5`;
+	let url = `https://api.unsplash.com/search/photos?query=${query}`;
 	let data = await fetch(url, {
 		method: 'GET',
 		headers: { Authorization: `Client-ID ${unsplashAK}` },
