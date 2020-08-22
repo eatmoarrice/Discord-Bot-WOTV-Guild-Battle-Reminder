@@ -68,7 +68,7 @@ bot.on('message', async (msg) => {
 			return;
 		}
 
-		if (message.includes('joke')) {
+		if (message.includes('joke') || message.includes(' pun')) {
 			let options = [];
 			if (message.includes('dark')) {
 				options.push('Dark');
