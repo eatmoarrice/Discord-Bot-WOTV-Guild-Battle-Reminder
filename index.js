@@ -79,7 +79,9 @@ bot.on('message', async (msg) => {
 			let joke = await fetchJoke(options);
 			if (joke.setup) {
 				msg.channel.send(joke.setup);
-				msg.channel.send(joke.delivery);
+				setTimeout(function () {
+					msg.channel.send(joke.delivery);
+				}, 3000);
 			}
 			if (joke.joke) {
 				msg.channel.send(joke.joke);
