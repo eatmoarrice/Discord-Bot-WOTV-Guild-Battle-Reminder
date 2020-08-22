@@ -3,6 +3,7 @@ const bot = new Discord.Client();
 let cron = require('node-cron');
 require('dotenv').config();
 const token = process.env.TOKEN;
+const pexelsAPI = process.env.PEXEL;
 const fetch = require('node-fetch');
 
 bot.on('ready', () => {
@@ -23,17 +24,38 @@ const fetchCat = async () => {
 	return response.file;
 };
 
+const fetchPxels = async (query) => {
+	let url = `https://api.pexels.com/v1/search?query=${query}&per_page=10`;
+	let data = await fetch(url, {
+		method: 'GET',
+		headers: { Authorization: pexelsAPI },
+	});
+	let response = await data.json();
+	let photos = response.photos;
+	let random = Math.floor(Math.random() * photos.length);
+	return photos[random].src.landscape;
+};
+
 bot.on('message', async (msg) => {
-	console.log(msg.content);
-	if (msg.content.startsWith('<@!746413258759602246>')) {
-		if (msg.content.includes('dog') || msg.content.includes('cat')) {
-			if (msg.content.includes('dog')) {
+	let message = msg.content.replace(/\s+/g, ' ').trim();
+	if (message.startsWith('<@!746413258759602246>')) {
+		if (message.startsWith('<@!746413258759602246> show me ') || msg.content.startsWith('<@!746413258759602246> Show me ')) {
+			let str = message;
+			let keyword = message.split(' ').slice(2).join(' ');
+			let url = await fetchPxels(keyword);
+			msg.channel.send({
+				files: [url],
+			});
+			return;
+		}
+		if (message.includes('dog') || message.includes('cat')) {
+			if (message.includes('dog')) {
 				let url = await fetchDog();
 				msg.channel.send({
 					files: [url],
 				});
 			}
-			if (msg.content.includes('cat')) {
+			if (message.includes('cat')) {
 				let url = await fetchCat();
 				msg.channel.send({
 					files: [url],
@@ -48,10 +70,10 @@ bot.on('message', async (msg) => {
 		});
 		const random = Math.floor(Math.random() * membersArray.length);
 		const person = membersArray[random].user.username;
-		if (msg.content.startsWith('<@!746413258759602246> Who is')) {
+		if (message.startsWith('<@!746413258759602246> Who is') || message.startsWith('<@!746413258759602246> who is')) {
 			await msg.channel.send(`C'mon! Everyone knows it's ${person}!!`);
-		} else if (msg.content.startsWith('<@!746413258759602246>') && msg.content.endsWith('?')) {
-			await msg.channel.send(eightball);
+			// } else if (message.startsWith('<@!746413258759602246>') && message.endsWith('?')) {
+			// 	await msg.channel.send(eightball);
 		} else msg.reply('Why are you talking to me?! Go do your guild battles!!');
 	}
 });
