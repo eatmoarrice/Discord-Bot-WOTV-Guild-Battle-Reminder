@@ -74,7 +74,8 @@ const fetchUnsplash = async (query) => {
 		method: 'GET',
 		headers: { Authorization: `Client-ID ${unsplashAK}` },
 	});
-	let response = await data.json().results;
+	let response = await data.json();
+	response = response.results;
 	if (response.length > 0) {
 		let random = Math.floor(Math.random() * response.length);
 		return response[random];
