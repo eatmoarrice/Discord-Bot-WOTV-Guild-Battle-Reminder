@@ -126,6 +126,7 @@ const fetchUnsplash = async (query) => {
 bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim();
 	let words = message.split(' ');
+	console.log(words);
 	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
 		// MEME
 		if (message.includes('meme')) {
@@ -190,7 +191,7 @@ bot.on('message', async (msg) => {
 			words[1].toLowerCase() === 'had'
 		) {
 			let answer = Math.floor(Math.random() * 2) === 0 ? 'yes' : 'no';
-			if ((answer = 'yes')) {
+			if (answer === 'yes') {
 				return msg.channel.send(yes[Math.floor(Math.random() * yes.length)]);
 			} else {
 				return msg.channel.send(no[Math.floor(Math.random() * no.length)]);
