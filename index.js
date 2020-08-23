@@ -7,6 +7,47 @@ const pexelsAPI = process.env.PEXEL;
 const unsplashAK = process.env.UNSPLASH_ACCESSKEY;
 const fetch = require('node-fetch');
 
+const yes = [
+	`Yes!`,
+	`My daddy says yes!`,
+	`Oh, it's a little fuzzy but I think my crystal ball says yes...`,
+	`Absolutely!`,
+	`Yes, I'm sure!`,
+	`For sure!`,
+	`Yup!`,
+	`Yeah, it seems so.`,
+	`Surprisingly, yes.`,
+	`Obviously duh!`,
+	`HELL YES!`,
+	`Abso-fucking-lutely!`,
+	`FUCK YEAH!`,
+	`A million times, yes!`,
+	`That is true. Now shut up.`,
+	`A resounding yes!`,
+	`Thumbs-up from me!`,
+	`Of course yes!`,
+	`Of course! Do you even need to ask?`,
+	`Duh! Everybody knows that!`,
+];
+const no = [
+	`No, I don't think so.`,
+	`Oh man, why do you ask? But that's a NO from me.`,
+	`Yikes! No way!`,
+	`Sadly, no.`,
+	`HELL NAW!`,
+	`Nope!`,
+	`You thought I'd say yes, but it's a hard NO!`,
+	`No way Jose!`,
+	`Maybe. What's it to you?`,
+	`Sorry but no.`,
+	`Sorry I just ran out of fucks to give.`,
+	`My papa tells me no.`,
+	`Dory keeps saying 'no' but I'm not sure if she's even talking to me.`,
+	`My fortune cookie says no.`,
+	`Why don't you just roll a dice? My vote is no.`,
+	`There’s a 100% chance that I’m going say no to that one.`,
+];
+
 bot.on('ready', () => {
 	console.log('Naggy Nemo is alive!');
 });
@@ -149,7 +190,11 @@ bot.on('message', async (msg) => {
 			words[1].toLowerCase() === 'had'
 		) {
 			let answer = Math.floor(Math.random() * 2) === 0 ? 'yes' : 'no';
-			msg.channel.send(`My dad says ${answer}!`);
+			if ((answer = 'yes')) {
+				return msg.channel.send(yes[Math.floor(Math.random() * yes.length)]);
+			} else {
+				return msg.channel.send(no[Math.floor(Math.random() * no.length)]);
+			}
 			return;
 		}
 
