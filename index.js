@@ -128,7 +128,7 @@ bot.on('message', async (msg) => {
 	let words = message.split(' ');
 	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
 		// FUCK YOU
-		if (words[1].toLowerCase() === 'fu' || (words[1].toLowerCase() === 'fuck' && words[2].toLowerCase === 'you')) {
+		if (words[1].toLowerCase() === 'fu' || (words[1].toLowerCase() === 'fuck' && words[2].toLowerCase() === 'you')) {
 			return msg.channel.send(`Fuck you too, bitch!`);
 		}
 
