@@ -126,8 +126,12 @@ const fetchUnsplash = async (query) => {
 bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim();
 	let words = message.split(' ');
-	console.log(words);
 	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
+		// FUCK YOU
+		if (words[1].toLowerCase() === 'fu' || (words[1].toLowerCase() === 'fuck' && words[2].toLowerCase === 'you')) {
+			msg.channel.send(`Fuck you too, bitch!`);
+		}
+
 		// MEME
 		if (message.includes('meme')) {
 			let meme = await fetchMeme();
@@ -188,7 +192,8 @@ bot.on('message', async (msg) => {
 			words[1].toLowerCase() === 'were' ||
 			words[1].toLowerCase() === 'have' ||
 			words[1].toLowerCase() === 'has' ||
-			words[1].toLowerCase() === 'had'
+			words[1].toLowerCase() === 'had' ||
+			(words[1].toLowerCase() === 'how' && words[2].toLowerCase() === 'about')
 		) {
 			let answer = Math.floor(Math.random() * 2) === 0 ? 'yes' : 'no';
 			if (answer === 'yes') {
