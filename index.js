@@ -193,7 +193,7 @@ bot.on('message', async (msg) => {
 			words[1].toLowerCase() === 'have' ||
 			words[1].toLowerCase() === 'has' ||
 			words[1].toLowerCase() === 'had' ||
-			(words[1].toLowerCase() === 'how' && words[2].toLowerCase() === 'about')
+			((words[1].toLowerCase() === 'how' || words[1].toLowerCase() === 'what') && words[2].toLowerCase() === 'about')
 		) {
 			let answer = Math.floor(Math.random() * 2) === 0 ? 'yes' : 'no';
 			if (answer === 'yes') {
