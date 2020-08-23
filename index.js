@@ -126,7 +126,8 @@ const fetchUnsplash = async (query) => {
 bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim();
 	let words = message.split(' ');
-	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
+	console.log(message);
+	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>' || words[0] === '<@&746420675178135623>') {
 		// FUCK YOU
 		if (words[1].toLowerCase() === 'fu' || (words[1].toLowerCase() === 'fuck' && words[2].toLowerCase() === 'you')) {
 			return msg.reply(`Fuck you too, bitch!`);
