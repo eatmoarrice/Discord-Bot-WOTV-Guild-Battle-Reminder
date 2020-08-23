@@ -129,7 +129,7 @@ bot.on('message', async (msg) => {
 	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>') {
 		// FUCK YOU
 		if (words[1].toLowerCase() === 'fu' || (words[1].toLowerCase() === 'fuck' && words[2].toLowerCase === 'you')) {
-			msg.channel.send(`Fuck you too, bitch!`);
+			return msg.channel.send(`Fuck you too, bitch!`);
 		}
 
 		// MEME
