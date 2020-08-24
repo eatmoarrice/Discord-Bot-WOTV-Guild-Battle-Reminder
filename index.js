@@ -42,7 +42,7 @@ const no = [
 	`Sorry but no.`,
 	`Sorry I just ran out of fucks to give.`,
 	`My papa tells me no.`,
-	`Dory keeps saying 'no' but I'm not sure if she's even talking to me.`,
+	// `Dory keeps saying 'no' but I'm not sure if she's even talking to me.`,
 	`My fortune cookie says no.`,
 	`Why don't you just roll a dice? My vote is no.`,
 	`There’s a 100% chance that I’m going say no to that one.`,
@@ -123,11 +123,27 @@ const fetchUnsplash = async (query) => {
 	} else return '';
 };
 
+const pickOne = (array) => {
+	let choice = array[Math.floor(Math.random() * array.length)].replace(',', '').trim();
+	return `'${choice.charAt(0).toUpperCase() + choice.slice(1)}'`;
+};
+
 bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim();
 	let words = message.split(' ');
-	console.log(message);
+
 	if (words[0] === '<@!746413258759602246>' || words[0] === '<@746413258759602246>' || words[0] === '<@&746420675178135623>') {
+		// PICK ONE
+		if (words[1].toLowerCase() === 'pick' && words[2].toLowerCase() === 'one:') {
+			let choices = [];
+			for (let i = 3; i < words.length; i++) {
+				choices.push(words[i]);
+			}
+			choices = choices.join(' ').split(',');
+			let choice = pickOne(choices);
+			return msg.reply(`${choice} sounds good!`);
+		}
+
 		// FUCK YOU
 		if (words[1].toLowerCase() === 'fu' || (words[1].toLowerCase() === 'fuck' && words[2].toLowerCase() === 'you')) {
 			return msg.reply(`Fuck you too, bitch!`);
