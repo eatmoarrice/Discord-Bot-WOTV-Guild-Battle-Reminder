@@ -128,8 +128,46 @@ const pickOne = (array) => {
 	return `'${choice.charAt(0).toUpperCase() + choice.slice(1)}'`;
 };
 
+function setTimeout_(fn, delay) {
+	var maxDelay = Math.pow(2, 31) - 1;
+
+	if (delay > maxDelay) {
+		var args = arguments;
+		args[1] -= maxDelay;
+
+		return setTimeout(function () {
+			setTimeout_.apply(undefined, args);
+		}, maxDelay);
+	}
+
+	return setTimeout.apply(undefined, arguments);
+}
+
+const getTimeout = (messageArray) => {
+	let timer = 0; // in seconds
+
+	let minuteIndex = messageArray.findIndex((item) => item == "minute(s)");
+	let secondIndex = messageArray.findIndex((item) => item == "second(s)");
+	let hourIndex = messageArray.findIndex((item) => item == "hour(s)");
+	let dayIndex = messageArray.findIndex((item) => item == "day(s)");
+
+	if (secondIndex > 0 && !isNaN(messageArray[secondIndex - 1])) {
+		timer += parseInt(messageArray[secondIndex - 1]);
+	}
+	if (minuteIndex > 0 && !isNaN(messageArray[minuteIndex - 1])) {
+		timer += parseInt(messageArray[minuteIndex - 1]) * 60;
+	}
+	if (hourIndex > 0 && !isNaN(messageArray[hourIndex - 1])) {
+		timer += parseInt(messageArray[hourIndex - 1]) * 3600;
+	}
+	if (dayIndex > 0 && !isNaN(messageArray[dayIndex - 1])) {
+		timer += parseInt(messageArray[dayIndex - 1]) * 3600 * 24;
+	}
+	return timer;
+};
+
 bot.on("message", async (msg) => {
-	let message = msg.content.replace(/\s+/g, " ").trim();
+	let message = msg.content.replace(/\s+/g, " ").trim().toLowerCase();
 	let words = message.split(" ");
 
 	if (words[0] === "<@!746413258759602246>" || words[0] === "<@746413258759602246>" || words[0] === "<@&746420675178135623>") {
@@ -193,7 +231,45 @@ bot.on("message", async (msg) => {
 		if (message.toLowerCase().includes("i love you") || message.toLowerCase().includes("i wuv you")) {
 			return msg.channel.send("I love me too! Now disappear from my sight!");
 		}
+		// REMINDER
+		if (words[1] == "remind" && words[2] == "me" && words[3] == "in" && words.includes("to") && words.length > 6) {
+			let remindTextArray = [];
+			let timeArray = [];
+			let toIndex = words.findIndex((item) => item == "to");
+			console.log(toIndex);
+			for (let i = 4; i < words.length; i++) {
+				if (i < toIndex) timeArray.push(words[i]);
+				else remindTextArray.push(words[i]);
+			}
+			if (words.includes("year") || words.includes("month") || words.includes("years") || words.includes("months")) {
+				return msg.reply(`I can't remember that long! I'm a fish ffs!`);
+			}
 
+			for (let i = 0; i < timeArray.length; i++) {
+				if (timeArray[i].includes("min")) timeArray[i] = "minute(s)";
+				if (timeArray[i].includes("sec")) timeArray[i] = "second(s)";
+				if (timeArray[i].includes("hr") || timeArray[i].includes("hour")) timeArray[i] = "hour(s)";
+				if (timeArray[i].includes("day")) timeArray[i] = "day(s)";
+			}
+
+			let seconds = getTimeout(timeArray);
+			remindTextArray.forEach((item, index) => {
+				if (item == "me" || item == "i") remindTextArray[index] = "you";
+				if (item == "am") remindTextArray[index] = "are";
+				if (item == "i'm") remindTextArray[index] = "you're";
+				if (item == "you") remindTextArray[index] = "Nemo";
+				if (item == "you're") remindTextArray[index] = "I'm";
+				if (item == "your") remindTextArray[index] = "my";
+				if (item == "yours") remindTextArray[index] = "mine";
+				if (item == "mine") remindTextArray[index] = "yours";
+			});
+
+			let niceMessage = remindTextArray.join(" ");
+			let timeMessage = timeArray.join(" ");
+			msg.reply(`OK I'll remind you to ${niceMessage} in ${timeMessage}!`);
+			setTimeout_(() => msg.reply(`I am here to remind you ${niceMessage}!`), seconds * 1000);
+			return;
+		}
 		// YES/NO QUESTIONS
 		if (
 			words[1].toLowerCase() === "is" ||
