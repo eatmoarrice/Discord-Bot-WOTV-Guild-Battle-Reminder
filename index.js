@@ -262,6 +262,7 @@ bot.on("message", async (msg) => {
 				if (item == "your") remindTextArray[index] = "my";
 				if (item == "yours") remindTextArray[index] = "mine";
 				if (item == "mine") remindTextArray[index] = "yours";
+				if (item == "my") remindTextArray[index] = "your";
 			});
 
 			let niceMessage = remindTextArray.join(" ");
