@@ -187,6 +187,21 @@ bot.on("message", async (msg) => {
 			return msg.reply(`Fuck you too, bitch!`);
 		}
 
+		// MADE BY PANDA
+		if (message.includes("who") && (message.includes("made") && message.includes("you")) {
+		    return msg.reply(`@Eat Moar Rice#7183 made me. Who's your Daddy?`);
+		}
+	
+		// SITE
+		if (message.includes("site") {
+		    return msg.reply(`https://wotv-guide.com`);
+		}
+       
+       		// EMOJIS
+       		if (message.includes("emojis") {
+		    return msg.reply(`You can find our emojis at https://wotv-guide.com/miscellaneous or ask for help in #🐲emoji-requests`);
+		}
+		
 		// MEME
 		if (message.includes("meme")) {
 			let meme = await fetchMeme();
