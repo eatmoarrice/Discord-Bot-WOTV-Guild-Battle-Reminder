@@ -172,7 +172,7 @@ bot.on("message", async (msg) => {
 
 	if (words[0] === "<@!746413258759602246>" || words[0] === "<@746413258759602246>" || words[0] === "<@&746420675178135623>") {
 		// PICK ONE
-		if (words[1].toLowerCase() === "pick" && words[2].toLowerCase() === "one:") {
+		if (words[1] === "pick" && words[2] === "one:") {
 			let choices = [];
 			for (let i = 3; i < words.length; i++) {
 				choices.push(words[i]);
@@ -183,25 +183,25 @@ bot.on("message", async (msg) => {
 		}
 
 		// FUCK YOU
-		if (words[1].toLowerCase() === "fu" || (words[1].toLowerCase() === "fuck" && words[2].toLowerCase() === "you")) {
+		if (words[1] === "fu" || (words[1] === "fuck" && words[2] === "you")) {
 			return msg.reply(`Fuck you too, bitch!`);
 		}
 
 		// MADE BY PANDA
-		if (message.includes("who") && (message.includes("made") && message.includes("you")) {
-		    return msg.reply(`@Eat Moar Rice#7183 made me. Who's your Daddy?`);
+		if (message.includes("who") && message.includes("made") && message.includes("you")) {
+			return msg.reply(`@Eat Moar Rice#7183 made me. Who's your Daddy?`);
 		}
-	
+
 		// SITE
-		if (message.includes("site") {
-		    return msg.reply(`https://wotv-guide.com`);
+		if (message.includes("site")) {
+			return msg.reply(`https://wotv-guide.com`);
 		}
-		
-                // EMOJIS
-		if (message.includes("emojis") {
-		    return msg.reply(`You can find our emojis at https://wotv-guide.com/miscellaneous or ask for help in #🐲emoji-requests`);
+
+		// EMOJIS
+		if (message.includes("emojis")) {
+			return msg.reply(`You can find our emojis at https://wotv-guide.com/miscellaneous or ask for help in #🐲emoji-requests`);
 		}
-		
+
 		// MEME
 		if (message.includes("meme")) {
 			let meme = await fetchMeme();
@@ -243,7 +243,7 @@ bot.on("message", async (msg) => {
 		}
 
 		// I LOVE YOU
-		if (message.toLowerCase().includes("i love you") || message.toLowerCase().includes("i wuv you")) {
+		if (message.includes("i love you") || message.includes("i wuv you")) {
 			return msg.channel.send("I love me too! Now disappear from my sight!");
 		}
 		// REMINDER
@@ -288,26 +288,26 @@ bot.on("message", async (msg) => {
 		}
 		// YES/NO QUESTIONS
 		if (
-			words[1].toLowerCase() === "is" ||
-			words[1].toLowerCase() === "are" ||
-			words[1].toLowerCase() === "will" ||
-			words[1].toLowerCase() === "do" ||
-			words[1].toLowerCase() === "does" ||
-			words[1].toLowerCase() === "did" ||
-			words[1].toLowerCase() === "am" ||
-			words[1].toLowerCase() === "can" ||
-			words[1].toLowerCase() === "could" ||
-			words[1].toLowerCase() === "may" ||
-			words[1].toLowerCase() === "might" ||
-			words[1].toLowerCase() === "would" ||
-			words[1].toLowerCase() === "shall" ||
-			words[1].toLowerCase() === "should" ||
-			words[1].toLowerCase() === "was" ||
-			words[1].toLowerCase() === "were" ||
-			words[1].toLowerCase() === "have" ||
-			words[1].toLowerCase() === "has" ||
-			words[1].toLowerCase() === "had" ||
-			((words[1].toLowerCase() === "how" || words[1].toLowerCase() === "what") && words[2].toLowerCase() === "about")
+			words[1] === "is" ||
+			words[1] === "are" ||
+			words[1] === "will" ||
+			words[1] === "do" ||
+			words[1] === "does" ||
+			words[1] === "did" ||
+			words[1] === "am" ||
+			words[1] === "can" ||
+			words[1] === "could" ||
+			words[1] === "may" ||
+			words[1] === "might" ||
+			words[1] === "would" ||
+			words[1] === "shall" ||
+			words[1] === "should" ||
+			words[1] === "was" ||
+			words[1] === "were" ||
+			words[1] === "have" ||
+			words[1] === "has" ||
+			words[1] === "had" ||
+			((words[1] === "how" || words[1] === "what") && words[2] === "about")
 		) {
 			let answer = Math.floor(Math.random() * 2) === 0 ? "yes" : "no";
 			if (answer === "yes") {
@@ -319,7 +319,7 @@ bot.on("message", async (msg) => {
 		}
 
 		// PEXELS
-		// if (words[1].toLowerCase() === 'show' && words[2].toLowerCase() === 'me') {
+		// if (words[1] === 'show' && words[2] === 'me') {
 		// 	let keyword = message.split(' ').slice(3).join(' ');
 		// 	let url = await fetchPxels(keyword);
 		// 	if (!url) {
@@ -332,7 +332,7 @@ bot.on("message", async (msg) => {
 		// }
 
 		// UNSPLASH
-		if (words[1].toLowerCase() === "show" && words[2].toLowerCase() === "me") {
+		if (words[1] === "show" && words[2] === "me") {
 			let keyword = message.split(" ").slice(3).join(" ");
 			let photoObject = await fetchUnsplash(keyword);
 			if (!photoObject) {
@@ -371,7 +371,7 @@ bot.on("message", async (msg) => {
 		});
 		const random = Math.floor(Math.random() * membersArray.length);
 		const person = membersArray[random].user.username;
-		if (words[1].toLowerCase() === "who") {
+		if (words[1] === "who") {
 			await msg.channel.send(`C'mon! Everyone knows it's ${person}!!`);
 			// } else if (message.startsWith('<@!746413258759602246>') && message.endsWith('?')) {
 			// 	await msg.channel.send(eightball);
