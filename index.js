@@ -196,9 +196,9 @@ bot.on("message", async (msg) => {
 		if (message.includes("site") {
 		    return msg.reply(`https://wotv-guide.com`);
 		}
-       
-       		// EMOJIS
-       		if (message.includes("emojis") {
+		
+                // EMOJIS
+		if (message.includes("emojis") {
 		    return msg.reply(`You can find our emojis at https://wotv-guide.com/miscellaneous or ask for help in #🐲emoji-requests`);
 		}
 		
