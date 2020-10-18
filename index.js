@@ -169,7 +169,7 @@ const getTimeout = (messageArray) => {
 
 const getBossData = async (name) => {
 	console.log(name);
-	let url = `${WOTV}/boss/${name}`;
+	let url = `${WOTV}/boss/name/${name}`;
 	let data = await fetch(url);
 	let response = await data.json();
 	return response.data;
@@ -219,7 +219,7 @@ bot.on('message', async (msg) => {
 			}
 			let data = await getBossData(bossName.join(' '));
 			msg.channel.send(`Raid Boss: ${data.name}  Element: ${data.element}`);
-			return msg.channel.send(`Description: ${data.description}`);
+			msg.channel.send(`Description: ${data.description}`);
 			return msg.channel.send(data.url);
 		}
 
