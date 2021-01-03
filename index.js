@@ -191,6 +191,22 @@ const getRes = async (name) => {
 	return response.data.resImgUrl;
 };
 
+const getStats = async (name) => {
+	let url = `${WOTV}/characters/${name}`;
+	let data = await fetch(url);
+	let response = await data.json();
+	console.log(response);
+	return response.data.statImgUrl;
+};
+
+const getInfo = async (name) => {
+	let url = `${WOTV}/characters/${name}`;
+	let data = await fetch(url);
+	let response = await data.json();
+	console.log(response);
+	return { stats: response.data.statImgUrl, res: response.data.resImgUrl };
+};
+
 bot.on('message', async (msg) => {
 	let message = msg.content.replace(/\s+/g, ' ').trim().toLowerCase();
 	let words = message.split(' ');
@@ -205,10 +221,22 @@ bot.on('message', async (msg) => {
 			let allBosses = await getAllBosses();
 			return msg.channel.send(`I have data for: ${allBosses.join(', ')}`);
 		}
-		// UNIT RES
-		if (words.length === 3 && words[1] === 'res') {
-			let imgURL = await getRes(words[2]);
-			return msg.channel.send(imgURL);
+		// UNIT RES/STATS/INFO
+		if (words.length >= 3 && ['res', 'stats', 'info'].includes(words[1])) {
+			let nickname = words.filter((e, i) => i > 1).join(' ');
+
+			if (words[1] === 'res') {
+				const imgURL = await getRes(nickname);
+				return msg.channel.send(imgURL);
+			} else if (words[1] === 'stats') {
+				const imgURL = await getStats(nickname);
+				return msg.channel.send(imgURL);
+			} else {
+				const imgObj = await getInfo(nickname);
+				msg.channel.send(imgObj.stats);
+				msg.channel.send(imgObj.res);
+				return;
+			}
 		}
 
 		// RAID
@@ -242,6 +270,10 @@ bot.on('message', async (msg) => {
 		// MADE BY PANDA
 		if (message.includes('who') && message.includes('made') && message.includes('you')) {
 			return msg.reply(`<@!240277779415957504> made me. Who's your Daddy?`);
+		}
+
+		if (message.includes('who') && message.includes('your') && message.includes('daddy')) {
+			return msg.reply(`<@!240277779415957504> made me. Who's YOUR daddy?`);
 		}
 
 		// SITE
@@ -453,3 +485,10 @@ bot.once('ready', () => {
 });
 
 bot.login(token);
+
+const http = require('http');
+const server = http.createServer((req, res) => {
+	res.writeHead(200);
+	res.end('ok');
+});
+server.listen(3000);
