@@ -9,6 +9,7 @@ const WOTV = process.env.WOTV_BACKEND;
 const fetch = require('node-fetch');
 
 const yes = [
+	'Test',
 	`Yes!`,
 	'Master',
 	`My daddy says yes!`,
