@@ -10,6 +10,7 @@ const fetch = require('node-fetch');
 
 const yes = [
 	`Yes!`,
+	'Master',
 	`My daddy says yes!`,
 	`Oh, it's a little fuzzy but I think my crystal ball says yes...`,
 	`Absolutely!`,
